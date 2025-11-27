@@ -93,9 +93,22 @@
             </div>
 
             <div class="hidden lg:flex gap-8 text-sm font-medium text-slate-600 items-center">
-                <a href="#live-demo" class="hover:text-thun-cyan transition">Simulación</a>
-                <a href="#question-bank" class="hover:text-thun-cyan transition">Banco de Preguntas</a>
-                <a href="#configurator" class="hover:text-thun-cyan transition">Tipos de Test</a>
+                
+                <a href="dashboard.html" class="hover:text-thun-cyan transition relative group">
+                    Banco de Preguntas
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-thun-cyan transition-all group-hover:w-full"></span>
+                </a>
+
+                <a href="editor.html" class="hover:text-thun-cyan transition relative group">
+                    Tipos de Test
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-thun-cyan transition-all group-hover:w-full"></span>
+                </a>
+
+                <a href="live.html" class="hover:text-thun-cyan transition relative group">
+                    En Vivo
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-thun-cyan transition-all group-hover:w-full"></span>
+                </a>
+
                 <a href="#features" class="hover:text-thun-cyan transition">Características</a>
             </div>
             
@@ -114,7 +127,7 @@
                 <div class="relative group">
                     <img id="user-avatar" src="" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-white shadow-md cursor-pointer hover:ring-2 hover:ring-thun-cyan transition object-cover">
                     <div class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl py-2 hidden group-hover:block border border-slate-100">
-                        <a href="#question-bank" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Mi Banco de Preguntas</a>
+                        <a href="dashboard.html" class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50">Mi Banco de Preguntas</a>
                         <div class="border-t border-slate-100 my-1"></div>
                         <a href="#" onclick="logout()" class="block px-4 py-2 text-sm text-red-500 hover:bg-red-50">Cerrar Sesión</a>
                     </div>
