@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThunTest - Domina tu Oposición</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'hand': ['"Architects Daughter"', 'cursive'],
+                        'sans': ['"Inter"', 'sans-serif'],
+                    },
+                    colors: {
+                        'thun-blue': '#3B82F6', // Azul eléctrico de la gráfica
+                        'thun-bg': '#F9FAFB',   // Gris muy pálido de fondo
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Efecto sutil de cristal/tarjeta */
+        .card-glass {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-thun-bg text-gray-800 font-sans antialiased">
+
+    <nav class="flex justify-between items-center p-6 max-w-7xl mx-auto">
+        <div class="text-2xl font-bold flex items-center gap-2">
+            <span class="text-yellow-500 text-3xl">⚡</span> ThunTest
+        </div>
+        <div class="hidden md:flex gap-6 text-sm font-medium text-gray-500">
+            <a href="#" class="hover:text-thun-blue transition">Funcionalidades</a>
+            <a href="#" class="hover:text-thun-blue transition">Para Opositores</a>
+            <a href="#" class="hover:text-thun-blue transition">Precios</a>
+        </div>
+        <button class="bg-black text-white px-5 py-2 rounded-full font-medium hover:bg-gray-800 transition">
+            Entrar
+        </button>
+    </nav>
+
+    <section class="text-center pt-20 pb-32 px-4 relative overflow-hidden">
+        
+        <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-blue-100 rounded-full blur-3xl opacity-30 -z-10"></div>
+
+        <h1 class="text-5xl md:text-7xl font-hand text-gray-900 mb-6 leading-tight">
+            Ponle <span class="text-thun-blue">lógica</span> a tu estudio <br>
+            y <span class="text-pink-500">corazón</span> a tus clases.
+        </h1>
+        
+        <p class="text-xl text-gray-500 max-w-2xl mx-auto mb-10 font-light">
+            La plataforma definitiva para simulacros de oposición con penalización real 
+            y formación interactiva en vivo.
+        </p>
+
+        <div class="flex justify-center gap-4 mb-16">
+            <button class="bg-thun-blue text-white px-8 py-4 rounded-xl shadow-lg shadow-blue-500/30 font-semibold hover:-translate-y-1 transition-all">
+                Empezar Gratis
+            </button>
+            <button class="bg-white text-gray-700 border border-gray-200 px-8 py-4 rounded-xl shadow-sm hover:shadow-md transition-all flex items-center gap-2">
+                <span>▶</span> Ver Demo
+            </button>
+        </div>
+
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            
+            <div class="card-glass rounded-3xl p-6 md:col-span-2 relative overflow-hidden group">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 class="font-hand text-xl text-gray-500">Rendimiento Oposición</h3>
+                        <p class="text-4xl font-bold mt-1">87.5 <span class="text-sm font-normal text-green-500">+12%</span></p>
+                    </div>
+                    <span class="p-2 bg-gray-50 rounded-lg">📈</span>
+                </div>
+                <svg viewBox="0 0 400 100" class="w-full h-32 stroke-thun-blue stroke-[3] fill-none overflow-visible">
+                    <path d="M0,80 C50,80 50,40 100,40 C150,40 150,70 200,60 C250,50 250,20 300,30 C350,40 350,10 400,5" />
+                    <circle cx="100" cy="40" r="4" class="fill-white stroke-thun-blue" />
+                    <circle cx="200" cy="60" r="4" class="fill-white stroke-thun-blue" />
+                    <circle cx="300" cy="30" r="4" class="fill-white stroke-thun-blue" />
+                </svg>
+                <p class="text-sm text-gray-400 mt-4 font-hand">"Vas por encima de la media, ¡sigue así!"</p>
+            </div>
+
+            <div class="card-glass rounded-3xl p-6 flex flex-col justify-center items-center text-center">
+                <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center text-3xl mb-4">⚡</div>
+                <h3 class="font-bold text-lg mb-2">Modo En Vivo</h3>
+                <p class="text-sm text-gray-500 mb-4">Lanza preguntas en tiempo real a tu audiencia.</p>
+                <div class="w-full bg-gray-100 rounded-full h-2 mb-2">
+                    <div class="bg-yellow-400 h-2 rounded-full w-3/4"></div>
+                </div>
+                <span class="text-xs font-hand text-gray-400">245 conectados ahora</span>
+            </div>
+
+        </div>
+    </section>
+
+</body>
+</html>
