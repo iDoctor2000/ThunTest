@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThunTest - En Vivo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .loader { border-top-color: #3B82F6; -webkit-animation: spinner 1.5s linear infinite; animation: spinner 1.5s linear infinite; }
+        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="bg-slate-900 text-white font-sans h-screen flex flex-col items-center justify-center relative overflow-hidden">
+    
+    <div class="absolute inset-0 bg-gradient-to-br from-blue-900 via-slate-900 to-black opacity-80"></div>
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+
+    <div class="relative z-10 w-full max-w-md px-6">
+        
+        <div id="waiting-screen" class="text-center">
+            <div class="mb-8 animate-pulse">
+                <img src="Thuntest Logo.jpg" class="h-12 mx-auto mb-4 filter brightness-200" onerror="this.src='https://via.placeholder.com/50/ffffff/000000?text=⚡'">
+                <h1 class="font-hand text-3xl">Esperando al presentador...</h1>
+                <p class="text-slate-400 mt-2">Sala: <span class="text-yellow-400 font-mono font-bold text-xl">#MIR-2025</span></p>
+            </div>
+            
+            <div class="flex justify-center">
+                <div class="loader ease-linear rounded-full border-4 border-t-4 border-slate-700 h-12 w-12 mb-4"></div>
+            </div>
+            <p class="text-sm text-slate-500">Mantén la pantalla activa</p>
+
+            <button onclick="startDemo()" class="mt-12 text-xs text-slate-600 border border-slate-700 px-4 py-2 rounded hover:text-white transition">
+                [Dev Only] Simular Inicio Pregunta
+            </button>
+        </div>
+
+        <div id="question-screen" class="hidden">
+            <div class="bg-white text-slate-900 rounded-3xl p-6 shadow-2xl">
+                <div class="flex justify-between items-center mb-4 border-b border-slate-100 pb-4">
+                    <span class="text-xs font-bold text-slate-400 uppercase">Pregunta 1/50</span>
+                    <span class="text-red-500 font-mono font-bold">00:30</span>
+                </div>
+                
+                <h2 class="text-xl font-bold mb-6">¿Cuál es el tratamiento de elección?</h2>
+                
+                <div class="space-y-3">
+                    <button class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-blue-500 hover:bg-blue-50 transition font-medium group">
+                        <span class="w-6 h-6 inline-flex items-center justify-center bg-slate-100 rounded-full text-xs mr-2 group-hover:bg-blue-500 group-hover:text-white transition">A</span>
+                        Quirúrgico
+                    </button>
+                    <button class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-blue-500 hover:bg-blue-50 transition font-medium group">
+                        <span class="w-6 h-6 inline-flex items-center justify-center bg-slate-100 rounded-full text-xs mr-2 group-hover:bg-blue-500 group-hover:text-white transition">B</span>
+                        Conservador
+                    </button>
+                    <button class="w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-blue-500 hover:bg-blue-50 transition font-medium group">
+                        <span class="w-6 h-6 inline-flex items-center justify-center bg-slate-100 rounded-full text-xs mr-2 group-hover:bg-blue-500 group-hover:text-white transition">C</span>
+                        Paliativo
+                    </button>
+                </div>
+
+                <button class="w-full mt-6 bg-slate-900 text-white py-4 rounded-xl font-bold shadow-lg hover:bg-blue-600 transition">
+                    Enviar Respuesta
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function startDemo() {
+            document.getElementById('waiting-screen').classList.add('hidden');
+            document.getElementById('question-screen').classList.remove('hidden');
+            document.getElementById('question-screen').classList.add('animate-bounce-in'); // Podríamos añadir animación CSS
+        }
+    </script>
+</body>
+</html>
