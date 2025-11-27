@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ThunTest - El Trueno antes de la Victoria</title>
     
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚡</text></svg>">
+
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script src="https://accounts.google.com/gsi/client" async defer></script>
@@ -69,7 +71,7 @@
             border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
             transform: rotate(-1deg); opacity: 0.8;
         }
-        /* Clase para revelar elementos al hacer scroll */
+        /* Reveal on Scroll */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 1s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
         
@@ -77,6 +79,20 @@
         .bg-grid-pattern {
             background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
             background-size: 24px 24px;
+        }
+
+        /* ANIMACIÓN DE LÍNEAS HOLOGRÁFICAS */
+        .path-animation {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 5s linear alternate infinite;
+        }
+        @keyframes dash {
+            from { stroke-dashoffset: 1000; }
+            to { stroke-dashoffset: 0; }
+        }
+        .background-lines-container {
+            position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; opacity: 0.4;
         }
     </style>
 </head>
@@ -87,28 +103,24 @@
             
             <div class="flex flex-col justify-center group cursor-pointer" onclick="window.scrollTo(0,0)">
                 <div class="flex items-center gap-2">
-                    <img src="Thuntest Logo.png" onerror="this.src='https://via.placeholder.com/150x50?text=ThunTest'" alt="ThunTest Logo" class="h-12 object-contain filter drop-shadow-sm group-hover:scale-105 transition transform">
+                    <img src="Thuntest Logo.jpg" onerror="this.src='https://via.placeholder.com/150x50?text=ThunTest'" alt="ThunTest Logo" class="h-12 object-contain filter drop-shadow-sm group-hover:scale-105 transition transform">
                 </div>
                 <span class="text-[10px] font-bold tracking-widest text-thun-cyan uppercase mt-1 pl-1 opacity-90 group-hover:opacity-100 transition">El trueno antes de la victoria</span>
             </div>
 
             <div class="hidden lg:flex gap-8 text-sm font-medium text-slate-600 items-center">
-                
                 <a href="dashboard.html" class="hover:text-thun-cyan transition relative group">
                     Banco de Preguntas
                     <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-thun-cyan transition-all group-hover:w-full"></span>
                 </a>
-
                 <a href="editor.html" class="hover:text-thun-cyan transition relative group">
                     Tipos de Test
                     <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-thun-cyan transition-all group-hover:w-full"></span>
                 </a>
-
                 <a href="live.html" class="hover:text-thun-cyan transition relative group">
                     En Vivo
                     <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-thun-cyan transition-all group-hover:w-full"></span>
                 </a>
-
                 <a href="#features" class="hover:text-thun-cyan transition">Características</a>
             </div>
             
@@ -136,13 +148,14 @@
         </div>
     </nav>
 
-    <section class="pt-40 pb-20 px-4 relative overflow-hidden bg-white">
-        <div class="absolute inset-0 bg-grid-pattern opacity-[0.4]"></div>
-        <div class="absolute top-20 left-10 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float"></div>
-        <div class="absolute top-40 right-10 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-float" style="animation-delay: 2s;"></div>
+    <section class="pt-40 pb-20 px-4 relative overflow-hidden bg-white min-h-[85vh] flex flex-col justify-center">
+        
+        <div id="background-lines" class="background-lines-container bg-white"></div>
+        
+        <div class="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent z-10"></div>
 
-        <div class="max-w-6xl mx-auto text-center relative z-10">
-            <div class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm mb-8 animate-fade-in-up backdrop-blur-sm">
+        <div class="max-w-6xl mx-auto text-center relative z-20">
+            <div class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white/80 border border-slate-200 shadow-sm mb-8 animate-fade-in-up backdrop-blur-sm">
                 <span class="flex h-2 w-2 relative mr-2">
                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-thun-cyan opacity-75"></span>
                     <span class="relative inline-flex rounded-full h-2 w-2 bg-thun-cyan"></span>
@@ -150,16 +163,26 @@
                 <span class="text-slate-600 text-xs font-bold tracking-wide uppercase">V3: Modo Interactivo Disponible</span>
             </div>
 
-            <h1 class="text-6xl md:text-8xl font-hand text-slate-900 mb-8 leading-[0.9] tracking-tight">
-                Donde la <span class="text-thun-blue">Razón</span> estudia <br>
-                y el <span class="text-accent-pink hand-underline">Corazón</span> enseña.
+            <h1 class="text-6xl md:text-8xl font-hand text-slate-900 mb-8 leading-[0.9] tracking-tight drop-shadow-sm">
+                Donde la <span class="text-thun-blue bg-white/50 px-2 rounded-lg">Razón</span> estudia <br>
+                y el <span class="text-accent-pink hand-underline bg-white/50 px-2 rounded-lg">Corazón</span> enseña.
             </h1>
             
-            <p class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+            <p class="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto mb-12 font-light leading-relaxed bg-white/60 backdrop-blur-sm rounded-xl p-4">
                 La plataforma definitiva para <strong>todo tipo de aprendizaje</strong>. Desde preparar una oposición exigente hasta votar en directo en un concierto o estadio.
             </p>
 
-            <div id="live-demo" class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto animate-fade-in-up" style="animation-delay: 0.2s;">
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-20 animate-fade-in-up" style="animation-delay: 0.2s;">
+                <button onclick="openLoginModal()" class="bg-thun-blue text-white px-8 py-4 rounded-xl shadow-xl shadow-blue-500/20 font-bold hover:bg-blue-600 transition hover:-translate-y-1 z-30 relative">
+                    Crear mi primer Test
+                </button>
+                <button class="bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-xl shadow-sm font-semibold hover:border-slate-300 hover:bg-slate-50 transition flex items-center justify-center gap-2 z-30 relative">
+                    <svg class="w-5 h-5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Ver Demo
+                </button>
+            </div>
+
+            <div id="live-demo" class="grid grid-cols-1 lg:grid-cols-2 gap-8 max-w-5xl mx-auto animate-fade-in-up relative z-20" style="animation-delay: 0.2s;">
                 
                 <div class="bg-white rounded-3xl p-8 shadow-card border border-slate-100 relative overflow-hidden text-left hover:border-thun-blue/30 transition-colors duration-300 group">
                     <div class="absolute top-0 left-0 w-1.5 h-full bg-thun-blue"></div>
@@ -226,27 +249,21 @@
                             <div class="mt-1 w-8 h-8 rounded-full bg-blue-100 text-thun-blue flex items-center justify-center font-bold text-sm">1</div>
                             <div>
                                 <h4 class="font-bold text-slate-800 text-lg">Árbol de Categorías Multinivel</h4>
-                                <p class="text-slate-500 text-sm mt-1">
-                                    Crea estructuras complejas (e.g., <em>Medicina > Cardiología > Arritmias</em>). Organiza tu material por temas, dificultad o año.
-                                </p>
+                                <p class="text-slate-500 text-sm mt-1">Crea estructuras complejas (e.g., <em>Medicina > Cardiología > Arritmias</em>).</p>
                             </div>
                         </li>
                         <li class="flex items-start gap-4">
                             <div class="mt-1 w-8 h-8 rounded-full bg-purple-100 text-purple-600 flex items-center justify-center font-bold text-sm">2</div>
                             <div>
                                 <h4 class="font-bold text-slate-800 text-lg">Drag & Drop (Arrastrar y Soltar)</h4>
-                                <p class="text-slate-500 text-sm mt-1">
-                                    Mueve preguntas de una categoría a otra o crea un examen simplemente arrastrando preguntas desde tu banco al lienzo del test.
-                                </p>
+                                <p class="text-slate-500 text-sm mt-1">Mueve preguntas de una categoría a otra o crea un examen arrastrando.</p>
                             </div>
                         </li>
                         <li class="flex items-start gap-4">
                             <div class="mt-1 w-8 h-8 rounded-full bg-green-100 text-green-600 flex items-center justify-center font-bold text-sm">3</div>
                             <div>
                                 <h4 class="font-bold text-slate-800 text-lg">Búsqueda Multimedia</h4>
-                                <p class="text-slate-500 text-sm mt-1">
-                                    Encuentra esa pregunta sobre "Neumotórax" en segundos. Añade imágenes recortadas o búscalas en la web directamente desde el editor.
-                                </p>
+                                <p class="text-slate-500 text-sm mt-1">Encuentra esa pregunta sobre "Neumotórax" en segundos.</p>
                             </div>
                         </li>
                     </ul>
@@ -278,13 +295,6 @@
                                         <div class="flex-1 truncate">P.45: ECG Fibrilación...</div>
                                         <span class="text-[10px] bg-green-100 text-green-700 px-1 rounded">V/F</span>
                                     </div>
-                                    <div class="flex items-center gap-3 p-2 hover:bg-slate-50 rounded opacity-60">
-                                        <span class="text-slate-400">::</span>
-                                        <div class="truncate">P.46: Soplo Sistólico...</div>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-2 p-2 hover:bg-slate-50 rounded cursor-pointer">
-                                    <span class="text-yellow-400">📁</span> <span>Neumología (89)</span>
                                 </div>
                             </div>
                         </div>
@@ -300,23 +310,16 @@
             <div class="text-center mb-16">
                 <span class="text-accent-pink font-bold tracking-widest text-sm uppercase">Editor V2</span>
                 <h2 class="text-4xl md:text-5xl font-hand text-slate-900 mt-2">Configura tus propias Preguntas</h2>
-                <p class="text-slate-500 mt-4 max-w-2xl mx-auto">
-                    La flexibilidad que necesitas. Desde encuestas rápidas hasta exámenes complejos con lógica condicional.
-                </p>
+                <p class="text-slate-500 mt-4 max-w-2xl mx-auto">La flexibilidad que necesitas. Desde encuestas rápidas hasta exámenes complejos.</p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[minmax(200px,auto)]">
-                
                 <div class="md:col-span-2 bg-slate-50 rounded-[2rem] p-8 border border-slate-100 hover:shadow-lg transition duration-300 group">
                     <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-2xl mb-6 group-hover:scale-110 transition">☑️</div>
                     <h3 class="text-xl font-bold text-slate-800 mb-2">Selección Múltiple & Test</h3>
-                    <p class="text-slate-500 text-sm mb-6 max-w-md">
-                        El estándar. Configura una o varias respuestas correctas. Penaliza los fallos automáticamente. Añade imágenes tanto en el enunciado como en las opciones.
-                    </p>
+                    <p class="text-slate-500 text-sm mb-6 max-w-md">El estándar. Configura una o varias respuestas correctas. Penaliza los fallos automáticamente.</p>
                     <div class="flex gap-2">
-                        <span class="h-3 w-16 bg-slate-200 rounded-full"></span>
-                        <span class="h-3 w-8 bg-slate-200 rounded-full"></span>
-                        <span class="h-3 w-24 bg-thun-blue rounded-full"></span>
+                        <span class="h-3 w-16 bg-slate-200 rounded-full"></span><span class="h-3 w-8 bg-slate-200 rounded-full"></span><span class="h-3 w-24 bg-thun-blue rounded-full"></span>
                     </div>
                 </div>
 
@@ -324,7 +327,7 @@
                     <div>
                         <div class="text-4xl mb-4 opacity-80">⚖️</div>
                         <h3 class="text-2xl font-bold">Verdadero / Falso</h3>
-                        <p class="text-blue-100 text-sm mt-2">Velocidad pura. Ideal para el modo "Quiz Rápido" en directo.</p>
+                        <p class="text-blue-100 text-sm mt-2">Velocidad pura. Ideal para el modo "Quiz Rápido".</p>
                     </div>
                     <div class="flex gap-3 mt-6">
                         <div class="flex-1 bg-white/20 py-2 rounded-lg text-center font-bold cursor-pointer hover:bg-white/30">V</div>
@@ -335,43 +338,30 @@
                 <div class="bg-slate-50 rounded-[2rem] p-8 border border-slate-100 hover:shadow-lg transition group">
                     <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-2xl mb-6">✍️</div>
                     <h3 class="text-xl font-bold text-slate-800 mb-2">Respuesta Abierta</h3>
-                    <p class="text-slate-500 text-sm">
-                        Deja que el alumno se exprese. Recoge feedback cualitativo o explicaciones detalladas.
-                    </p>
+                    <p class="text-slate-500 text-sm">Deja que el alumno se exprese. Recoge feedback cualitativo.</p>
                 </div>
 
                 <div class="md:col-span-2 bg-slate-900 rounded-[2rem] p-8 text-white shadow-2xl relative overflow-hidden flex flex-col md:flex-row gap-8 items-center">
                     <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/connected.png')] opacity-10"></div>
-                    
                     <div class="flex-1 relative z-10">
                         <div class="flex items-center gap-2 mb-3 text-accent-yellow">
                             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                             <span class="text-xs font-bold uppercase tracking-widest">Modo Pro</span>
                         </div>
                         <h3 class="text-2xl font-bold mb-3">Saltos y Lógica Condicional</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">
-                            Crea itinerarios adaptativos. "Si responde A, saltar a la Sección 3". "Si falla, mostrar explicación". Configura la ruta de aprendizaje.
-                        </p>
+                        <p class="text-slate-400 text-sm leading-relaxed">Crea itinerarios adaptativos. "Si responde A, saltar a la Sección 3".</p>
                     </div>
-                    
                     <div class="bg-white/10 p-6 rounded-xl border border-white/10 w-full md:w-auto min-w-[240px]">
                         <div class="flex flex-col items-center gap-3">
                             <div class="px-4 py-2 bg-thun-blue rounded-lg text-xs font-bold w-full text-center">Pregunta 1</div>
                             <div class="h-6 w-0.5 bg-slate-500"></div>
                             <div class="flex gap-4 w-full">
-                                <div class="flex-1 p-2 bg-slate-700 rounded-lg text-[10px] text-center border border-slate-600">
-                                    <span class="text-green-400 block mb-1">Correcta</span>
-                                    <span>Ir a P.2</span>
-                                </div>
-                                <div class="flex-1 p-2 bg-slate-700 rounded-lg text-[10px] text-center border border-slate-600">
-                                    <span class="text-red-400 block mb-1">Fallo</span>
-                                    <span>Ir a Repaso</span>
-                                </div>
+                                <div class="flex-1 p-2 bg-slate-700 rounded-lg text-[10px] text-center border border-slate-600"><span class="text-green-400 block mb-1">Correcta</span><span>Ir a P.2</span></div>
+                                <div class="flex-1 p-2 bg-slate-700 rounded-lg text-[10px] text-center border border-slate-600"><span class="text-red-400 block mb-1">Fallo</span><span>Ir a Repaso</span></div>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -382,12 +372,11 @@
                 <h2 class="text-4xl font-hand text-slate-900 mb-4">Potencia bajo el capó</h2>
                 <p class="text-slate-500 max-w-2xl mx-auto">Funcionalidades diseñadas siguiendo la especificación técnica más rigurosa.</p>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                 <div class="space-y-8">
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-2xl border border-slate-100">🔄</div>
-                        <div><h3 class="font-bold text-lg text-slate-800">Multi-Edición</h3><p class="text-sm text-slate-500 mt-2">Publica múltiples ediciones de un mismo test para distintos grupos sin duplicar.</p></div>
+                        <div><h3 class="font-bold text-lg text-slate-800">Multi-Edición</h3><p class="text-sm text-slate-500 mt-2">Publica múltiples ediciones de un mismo test sin duplicar.</p></div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-2xl border border-slate-100">⚖️</div>
@@ -397,11 +386,11 @@
                 <div class="space-y-8">
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-2xl border border-slate-100">👥</div>
-                        <div><h3 class="font-bold text-lg text-slate-800">Login Social & Grupos</h3><p class="text-sm text-slate-500 mt-2">Invita a amigos de Facebook/Twitter y gestiona listas de participantes.</p></div>
+                        <div><h3 class="font-bold text-lg text-slate-800">Login Social & Grupos</h3><p class="text-sm text-slate-500 mt-2">Invita a amigos de Facebook/Twitter.</p></div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-2xl border border-slate-100">📊</div>
-                        <div><h3 class="font-bold text-lg text-slate-800">Analítica Exportable</h3><p class="text-sm text-slate-500 mt-2">Exporta resultados a CSV/Excel para integrarlo en tu base de datos.</p></div>
+                        <div><h3 class="font-bold text-lg text-slate-800">Analítica Exportable</h3><p class="text-sm text-slate-500 mt-2">Exporta resultados a CSV/Excel.</p></div>
                     </div>
                 </div>
                  <div class="space-y-8">
@@ -411,7 +400,7 @@
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-2xl border border-slate-100">🔒</div>
-                        <div><h3 class="font-bold text-lg text-slate-800">Privacidad y Seguridad</h3><p class="text-sm text-slate-500 mt-2">Tus datos y preguntas están seguros en nuestra nube encriptada.</p></div>
+                        <div><h3 class="font-bold text-lg text-slate-800">Privacidad y Seguridad</h3><p class="text-sm text-slate-500 mt-2">Tus datos seguros en nuestra nube encriptada.</p></div>
                     </div>
                 </div>
             </div>
@@ -422,10 +411,10 @@
         <div class="max-w-7xl mx-auto px-6 text-center">
             <h2 class="text-3xl font-hand text-slate-800 mb-12">Desde el Aula Magna hasta el Estadio</h2>
             <div class="flex flex-wrap justify-center gap-4">
-                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">⚽ Deportes: ¿Quién marcará?</span>
-                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">🎸 Conciertos: Vota la canción</span>
-                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">🏥 Hospital: Casos Clínicos</span>
-                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">🛍️ Marketing: Encuestas</span>
+                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">⚽ Deportes</span>
+                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">🎸 Conciertos</span>
+                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">🏥 Hospital</span>
+                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">🛍️ Marketing</span>
             </div>
         </div>
     </section>
@@ -439,9 +428,7 @@
                 </div>
                 <p class="text-[10px] text-slate-500 font-bold tracking-widest uppercase">El trueno antes de la victoria</p>
             </div>
-            <p class="text-sm font-hand opacity-60 text-center md:text-right">
-                Diseñado con pasión y lógica desde Murcia. <br> © 2025 iDoctor Systems.
-            </p>
+            <p class="text-sm font-hand opacity-60 text-center md:text-right">Diseñado con pasión y lógica desde Murcia. <br> © 2025 iDoctor Systems.</p>
             <div class="flex gap-6 text-sm">
                 <a href="#" class="hover:text-white transition">Twitter</a>
                 <a href="#" class="hover:text-white transition">Facebook</a>
@@ -473,7 +460,44 @@
     </div>
 
     <script>
-        // Scroll Reveal Animation
+        // --- 1. GENERADOR DE LÍNEAS HOLOGRÁFICAS (JavaScript Puro) ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const container = document.getElementById('background-lines');
+            if (!container) return;
+
+            const width = window.innerWidth;
+            const height = window.innerHeight; // Altura de ventana
+            const colors = ["#3B82F6", "#06b6d4", "#cbd5e1"]; // Azul, Cyan, Gris
+
+            let svgContent = `<svg viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" class="w-full h-full opacity-30">`;
+
+            // Crear 20 líneas aleatorias
+            for (let i = 0; i < 20; i++) {
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const strokeWidth = Math.random() * 2 + 1; // Grosor
+                const duration = Math.random() * 10 + 10; // Velocidad aleatoria
+                
+                // Generar curvas (Bézier) de abajo a arriba
+                const startX = Math.random() * width;
+                const endX = Math.random() * width;
+                const cp1X = Math.random() * width; 
+                const cp1Y = height * 0.75;
+                const cp2X = Math.random() * width; 
+                const cp2Y = height * 0.25;
+
+                const path = `M ${startX} ${height} C ${cp1X} ${cp1Y}, ${cp2X} ${cp2Y}, ${endX} 0`;
+
+                // Añadir path con animación
+                svgContent += `
+                    <path d="${path}" stroke="${color}" stroke-width="${strokeWidth}" fill="none" class="path-animation" style="animation-duration: ${duration}s; opacity: 0.6;">
+                    </path>
+                `;
+            }
+            svgContent += `</svg>`;
+            container.innerHTML = svgContent;
+        });
+
+        // --- 2. ANIMACIÓN AL HACER SCROLL ---
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -487,7 +511,7 @@
             observer.observe(elem);
         });
 
-        // Auth Logic
+        // --- 3. LÓGICA DE LOGIN ---
         const modal = document.getElementById('login-modal');
         const authContainer = document.getElementById('auth-container');
         const userProfile = document.getElementById('user-profile');
