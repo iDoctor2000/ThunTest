@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ThunTest - El Trueno antes de la Victoria</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
@@ -17,7 +18,7 @@
                     },
                     colors: {
                         'thun-blue': '#3B82F6', 
-                        'thun-cyan': '#06b6d4', /* Cyan del logo */
+                        'thun-cyan': '#06b6d4',
                         'thun-dark': '#0f172a', 
                         'thun-bg': '#F8FAFC',
                         'accent-pink': '#EC4899',
@@ -25,16 +26,21 @@
                     },
                     boxShadow: {
                         'soft': '0 20px 40px -15px rgba(0, 0, 0, 0.05)',
-                        'glow': '0 0 20px rgba(6, 182, 212, 0.5)' /* Brillo estilo neon logo */
+                        'glow': '0 0 20px rgba(6, 182, 212, 0.5)'
                     },
                     animation: {
                         'pulse-fast': 'pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                         'progress': 'progress 2s ease-out forwards',
+                        'fade-in': 'fadeIn 0.5s ease-out forwards',
                     },
                     keyframes: {
                         progress: {
                             '0%': { width: '0%' },
                             '100%': { width: 'var(--value)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(-10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
                     }
                 }
@@ -47,29 +53,23 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.6);
         }
-        .hand-underline {
-            position: relative;
-            display: inline-block;
-        }
         .hand-underline::after {
             content: '';
             position: absolute;
-            left: 0;
-            bottom: -5px;
-            width: 100%;
-            height: 3px;
+            left: 0; bottom: -5px; width: 100%; height: 3px;
             background: #F59E0B;
             border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
             transform: rotate(-1deg);
             opacity: 0.8;
         }
-        /* Clase para simular barras de progreso animadas */
-        .progress-bar-fill {
-            animation: progress 1.5s ease-out forwards;
+        /* Modal Glass */
+        .modal-overlay {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
         }
     </style>
 </head>
-<body class="bg-thun-bg text-slate-800 font-sans antialiased">
+<body class="bg-thun-bg text-slate-800 font-sans antialiased relative">
 
     <nav class="fixed top-0 w-full z-50 glass-panel border-b border-slate-200/50 transition-all duration-300">
         <div class="max-w-7xl mx-auto px-6 h-24 flex justify-between items-center">
@@ -84,20 +84,69 @@
                 <a href="#live-demo" class="hover:text-thun-cyan transition">Simulación en Vivo</a>
                 <a href="#uses" class="hover:text-thun-cyan transition">Casos de Uso</a>
             </div>
-            <div class="flex gap-4 items-center">
-                <button class="text-slate-600 font-medium hover:text-thun-blue text-sm">Login</button>
-                <button class="bg-gradient-to-r from-thun-blue to-thun-cyan text-white px-6 py-2.5 rounded-full text-sm font-bold hover:shadow-glow transition transform hover:-translate-y-0.5">
+            
+            <div id="auth-container" class="flex gap-4 items-center">
+                <button onclick="openLoginModal()" class="text-slate-600 font-medium hover:text-thun-blue text-sm">Login</button>
+                <button onclick="openLoginModal()" class="bg-gradient-to-r from-thun-blue to-thun-cyan text-white px-6 py-2.5 rounded-full text-sm font-bold hover:shadow-glow transition transform hover:-translate-y-0.5">
                     Empezar
                 </button>
             </div>
+
+            <div id="user-profile" class="hidden flex items-center gap-3 animate-fade-in">
+                <div class="text-right hidden md:block">
+                    <p id="user-name" class="text-sm font-bold text-slate-700">Usuario</p>
+                    <p class="text-xs text-thun-cyan font-bold tracking-wide">Plan Pro</p>
+                </div>
+                <img id="user-avatar" src="https://ui-avatars.com/api/?name=User&background=0D8ABC&color=fff" alt="Avatar" class="w-10 h-10 rounded-full border-2 border-thun-cyan shadow-sm cursor-pointer hover:scale-105 transition">
+                <button onclick="logout()" class="text-xs text-red-400 hover:text-red-600 ml-2">Salir</button>
+            </div>
+
         </div>
     </nav>
+
+    <div id="login-modal" class="fixed inset-0 z-[60] hidden">
+        <div class="absolute inset-0 modal-overlay" onclick="closeLoginModal()"></div>
+        
+        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-3xl p-8 shadow-2xl w-full max-w-md border border-white/50 animate-fade-in">
+            <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">✕</button>
+            
+            <div class="text-center mb-8">
+                <div class="inline-block p-3 rounded-full bg-blue-50 text-3xl mb-4">⚡</div>
+                <h2 class="text-2xl font-bold text-slate-800 font-hand">¡Hola, iDoctor!</h2>
+                <p class="text-slate-500 text-sm mt-2">Accede a tus tests, simulacros y resultados.</p>
+            </div>
+
+            <div class="flex justify-center mb-6">
+                <div id="g_id_onload"
+                     data-client_id="TU_CLIENT_ID_DE_GOOGLE_AQUI" 
+                     data-callback="handleCredentialResponse"
+                     data-auto_prompt="false">
+                </div>
+                <div class="g_id_signin"
+                     data-type="standard"
+                     data-size="large"
+                     data-theme="outline"
+                     data-text="sign_in_with"
+                     data-shape="pill"
+                     data-logo_alignment="left">
+                </div>
+            </div>
+
+            <div class="relative py-4">
+                <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-100"></div></div>
+                <div class="relative flex justify-center text-sm"><span class="px-2 bg-white text-slate-400">O prueba la demo</span></div>
+            </div>
+            
+            <button onclick="simulateLogin()" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold hover:bg-slate-800 transition shadow-lg">
+                Entrar como Juan (Demo)
+            </button>
+        </div>
+    </div>
 
     <section class="pt-40 pb-20 px-4 relative overflow-hidden bg-white">
         <div class="absolute inset-0 opacity-5 bg-[url('https://www.transparenttextures.com/patterns/connected.png')]"></div>
 
         <div class="max-w-6xl mx-auto text-center relative z-10">
-            
             <div class="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-cyan-50 border border-cyan-100 mb-8 animate-fade-in-up">
                 <span class="text-thun-cyan text-xs font-bold tracking-wide uppercase flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>
@@ -115,7 +164,6 @@
             </p>
 
             <div id="live-demo" class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto mt-12">
-                
                 <div class="bg-white rounded-3xl p-6 shadow-xl border border-slate-100 relative overflow-hidden group">
                     <div class="absolute top-0 left-0 w-1 h-full bg-thun-blue"></div>
                     <div class="flex justify-between items-center mb-4">
@@ -125,9 +173,7 @@
                             00:45
                         </div>
                     </div>
-                    
                     <p class="text-left font-medium text-lg mb-6">34. Paciente con disnea súbita. ¿Cuál es el diagnóstico más probable?</p>
-                    
                     <div class="space-y-3">
                         <div class="p-3 rounded-xl border border-slate-200 hover:border-thun-blue hover:bg-blue-50 cursor-pointer transition flex justify-between items-center group-hover:opacity-50 hover:!opacity-100">
                             <span>A. Neumotórax a tensión</span>
@@ -140,10 +186,6 @@
                             <span>C. Infarto agudo</span>
                         </div>
                     </div>
-                    <div class="mt-4 text-xs text-slate-400 text-left flex gap-4">
-                        <span>★ Saltos Condicionales: Activo</span>
-                        <span>★ Reanudación: Activo</span>
-                    </div>
                 </div>
 
                 <div class="bg-slate-900 rounded-3xl p-6 shadow-2xl relative overflow-hidden text-white">
@@ -155,14 +197,11 @@
                         </div>
                         <span class="font-hand text-accent-yellow text-xl">Sala #ROCK-MURCIA</span>
                     </div>
-
                     <h3 class="text-2xl font-bold mb-6 text-center relative z-10">¿Qué canción tocamos ahora?</h3>
-
                     <div class="space-y-4 relative z-10">
                         <div>
                             <div class="flex justify-between text-sm mb-1">
-                                <span>"Maldita Dulzura"</span>
-                                <span class="font-mono">65%</span>
+                                <span>"Maldita Dulzura"</span><span class="font-mono">65%</span>
                             </div>
                             <div class="w-full bg-white/10 rounded-full h-3 overflow-hidden">
                                 <div class="bg-gradient-to-r from-pink-500 to-purple-500 h-full rounded-full animate-[progress_2s_ease-out_forwards]" style="width: 65%"></div>
@@ -170,25 +209,14 @@
                         </div>
                         <div>
                             <div class="flex justify-between text-sm mb-1 text-slate-400">
-                                <span>"Pájaros de Barro"</span>
-                                <span class="font-mono">25%</span>
+                                <span>"Pájaros de Barro"</span><span class="font-mono">25%</span>
                             </div>
                             <div class="w-full bg-white/10 rounded-full h-3 overflow-hidden">
                                 <div class="bg-slate-600 h-full rounded-full animate-[progress_2.5s_ease-out_forwards]" style="width: 25%"></div>
                             </div>
                         </div>
-                        <div>
-                            <div class="flex justify-between text-sm mb-1 text-slate-400">
-                                <span>"Soldadito Marinero"</span>
-                                <span class="font-mono">10%</span>
-                            </div>
-                            <div class="w-full bg-white/10 rounded-full h-3 overflow-hidden">
-                                <div class="bg-slate-600 h-full rounded-full animate-[progress_3s_ease-out_forwards]" style="width: 10%"></div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -199,96 +227,37 @@
                 <h2 class="text-4xl font-hand text-slate-900 mb-4">Potencia bajo el capó</h2>
                 <p class="text-slate-500 max-w-2xl mx-auto">Funcionalidades diseñadas siguiendo la especificación técnica más rigurosa, pero con una interfaz humana.</p>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-                
                 <div class="space-y-8">
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-2xl border border-slate-100">✏️</div>
-                        <div>
-                            <h3 class="font-bold text-lg text-slate-800">Editor Drag & Drop</h3>
-                            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
-                                Organiza categorías multinivel arrastrando elementos. Importa imágenes directamente desde la web para tus preguntas.
-                            </p>
-                        </div>
+                        <div><h3 class="font-bold text-lg text-slate-800">Editor Drag & Drop</h3><p class="text-sm text-slate-500 mt-2">Organiza categorías multinivel arrastrando elementos.</p></div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-2xl border border-slate-100">🔄</div>
-                        <div>
-                            <h3 class="font-bold text-lg text-slate-800">Multi-Edición</h3>
-                            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
-                                Crea una encuesta una vez y publica múltiples ediciones para distintos grupos sin duplicar trabajo.
-                            </p>
-                        </div>
+                        <div><h3 class="font-bold text-lg text-slate-800">Multi-Edición</h3><p class="text-sm text-slate-500 mt-2">Publica múltiples ediciones para distintos grupos.</p></div>
                     </div>
                 </div>
-
                 <div class="space-y-8">
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-2xl border border-slate-100">🧠</div>
-                        <div>
-                            <h3 class="font-bold text-lg text-slate-800">Lógica Condicional</h3>
-                            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
-                                Crea caminos personalizados. Si el usuario responde "A", salta a la sección 3. Oculta preguntas irrelevantes.
-                            </p>
-                        </div>
+                        <div><h3 class="font-bold text-lg text-slate-800">Lógica Condicional</h3><p class="text-sm text-slate-500 mt-2">Si responde "A", salta a la sección 3.</p></div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-2xl border border-slate-100">⚖️</div>
-                        <div>
-                            <h3 class="font-bold text-lg text-slate-800">Penalización Real</h3>
-                            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
-                                Fundamental para oposiciones. Configura restas por fallos para simular la presión del examen real.
-                            </p>
-                        </div>
+                        <div><h3 class="font-bold text-lg text-slate-800">Penalización Real</h3><p class="text-sm text-slate-500 mt-2">Restas por fallos para simular el examen real.</p></div>
                     </div>
                 </div>
-
                 <div class="space-y-8">
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-2xl border border-slate-100">👥</div>
-                        <div>
-                            <h3 class="font-bold text-lg text-slate-800">Grupos & Login Social</h3>
-                            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
-                                Invita a amigos de Facebook o Twitter. Gestiona listas de participantes y verifica quién ha abierto la invitación.
-                            </p>
-                        </div>
+                        <div><h3 class="font-bold text-lg text-slate-800">Login Social</h3><p class="text-sm text-slate-500 mt-2">Entra con Google, Facebook o Twitter.</p></div>
                     </div>
                     <div class="flex items-start gap-4">
                         <div class="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-2xl border border-slate-100">📊</div>
-                        <div>
-                            <h3 class="font-bold text-lg text-slate-800">Analítica Exportable</h3>
-                            <p class="text-sm text-slate-500 mt-2 leading-relaxed">
-                                Paneles gráficos detallados por alumno y pregunta. Exporta todo a CSV/Excel para integrarlo en tu base de datos.
-                            </p>
-                        </div>
+                        <div><h3 class="font-bold text-lg text-slate-800">Analítica Exportable</h3><p class="text-sm text-slate-500 mt-2">Exporta todo a CSV/Excel.</p></div>
                     </div>
                 </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="uses" class="py-20 bg-white border-t border-slate-100">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <h2 class="text-3xl font-hand text-slate-800 mb-12">Desde el Aula Magna hasta el Estadio</h2>
-            
-            <div class="flex flex-wrap justify-center gap-4">
-                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">
-                    ⚽ Deportes: ¿Quién marcará gol?
-                </span>
-                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">
-                    🎸 Conciertos: Vota la canción
-                </span>
-                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">
-                    🏥 Hospital: Casos Clínicos
-                </span>
-                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">
-                    🛍️ Marketing: Encuestas en Centros
-                </span>
-                <span class="px-6 py-3 rounded-full bg-slate-50 text-slate-600 border border-slate-200 text-sm font-semibold hover:bg-thun-blue hover:text-white hover:border-thun-blue transition cursor-default">
-                    🎁 Social: ¿Qué premio ofrecemos?
-                </span>
             </div>
         </div>
     </section>
@@ -302,18 +271,80 @@
                 </div>
                 <p class="text-xs text-thun-cyan font-bold tracking-widest uppercase">El trueno antes de la victoria</p>
             </div>
-            
-            <p class="text-sm font-hand opacity-60">
-                Diseñado con pasión y lógica desde Murcia. © 2025
-            </p>
-            
-            <div class="flex gap-6 text-sm">
-                <a href="#" class="hover:text-white transition">Twitter</a>
-                <a href="#" class="hover:text-white transition">Facebook</a>
-                <a href="#" class="hover:text-white transition">Contacto</a>
-            </div>
+            <p class="text-sm font-hand opacity-60">Diseñado con pasión y lógica desde Murcia. © 2025</p>
         </div>
     </footer>
 
+    <script>
+        // 1. Funciones del Modal
+        const modal = document.getElementById('login-modal');
+        const authContainer = document.getElementById('auth-container');
+        const userProfile = document.getElementById('user-profile');
+        const userName = document.getElementById('user-name');
+        const userAvatar = document.getElementById('user-avatar');
+
+        function openLoginModal() {
+            modal.classList.remove('hidden');
+        }
+
+        function closeLoginModal() {
+            modal.classList.add('hidden');
+        }
+
+        // 2. Simulación de Login (Para cuando no hay Client ID real)
+        function simulateLogin() {
+            closeLoginModal();
+            // Simular carga
+            setTimeout(() => {
+                // Actualizar interfaz
+                authContainer.classList.add('hidden');
+                userProfile.classList.remove('hidden');
+                
+                // Datos simulados de Juan
+                userName.innerText = "Juan (iDoctor)";
+                userAvatar.src = "https://ui-avatars.com/api/?name=Juan+Antonio&background=06b6d4&color=fff";
+                
+                alert("¡Bienvenido al sotano, Doctor! Estás en modo demostración.");
+            }, 300);
+        }
+
+        function logout() {
+            authContainer.classList.remove('hidden');
+            userProfile.classList.add('hidden');
+            // Si fuera real, aquí desconectaríamos de Google
+            google.accounts.id.disableAutoSelect();
+        }
+
+        // 3. Login Real con Google (Requiere Client ID)
+        // Esta función se ejecuta automáticamente cuando Google valida al usuario
+        function handleCredentialResponse(response) {
+            console.log("Encoded JWT ID token: " + response.credential);
+            
+            // Decodificar el JWT (JSON Web Token) para sacar los datos del usuario
+            const responsePayload = decodeJwtResponse(response.credential);
+
+            console.log("ID: " + responsePayload.sub);
+            console.log("Full Name: " + responsePayload.name);
+            console.log("Image URL: " + responsePayload.picture);
+            console.log("Email: " + responsePayload.email);
+
+            // Actualizar UI con datos REALES
+            closeLoginModal();
+            authContainer.classList.add('hidden');
+            userProfile.classList.remove('hidden');
+            userName.innerText = responsePayload.name;
+            userAvatar.src = responsePayload.picture;
+        }
+
+        // Función auxiliar para leer el token de Google
+        function decodeJwtResponse(token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            return JSON.parse(jsonPayload);
+        }
+    </script>
 </body>
 </html>
