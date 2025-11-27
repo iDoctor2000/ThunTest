@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ThunTest - Lógica y Corazón</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'hand': ['"Architects Daughter"', 'cursive'],
+                        'sans': ['"Inter"', 'sans-serif'],
+                    },
+                    colors: {
+                        'thun-blue': '#3B82F6', // Azul eléctrico
+                        'thun-dark': '#1e293b', 
+                        'thun-bg': '#F8FAFC',   // Fondo gris muy suave
+                        'accent-yellow': '#F59E0B' // Toque dorado/rayo
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(0, 0, 0, 0.05)',
+                        'glow': '0 0 20px rgba(59, 130, 246, 0.3)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Clases de utilidad personalizadas */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to right, #3B82F6, #6366f1);
+        }
+        .hand-underline {
+            position: relative;
+            display: inline-block;
+        }
+        .hand-underline::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 3px;
+            background: #F59E0B;
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            transform: rotate(-1deg);
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="bg-thun-bg text-slate-800 font-sans antialiased selection:bg-thun-blue selection:text-white">
+
+    <nav class="fixed top-0 w-full z-50 glass-panel border-b border-slate-200/50">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex justify-between items-center">
+            <div class="text-2xl font-bold flex items-center gap-2 cursor-pointer">
+                <div class="bg-gradient-to-br from-yellow-400 to-orange-500 text-white w-10 h-10 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <span class="font-sans tracking-tight text-slate-800">ThunTest</span>
+            </div>
+            <div class="hidden md:flex gap-8 text-sm font-medium text-slate-500">
+                <a href="#features" class="hover:text-thun-blue transition">Funcionalidades</a>
+                <a href="#opposition" class="hover:text-thun-blue transition">Oposiciones</a>
+                <a href="#live" class="hover:text-thun-blue transition">Modo En Vivo</a>
+            </div>
+            <div class="flex gap-4">
+                <button class="text-slate-600 font-medium hover:text-thun-blue text-sm">Login</button>
+                <button class="bg-slate-900 text-white px-5 py-2.5 rounded-xl text-sm font-medium hover:bg-slate-800 transition shadow-lg shadow-slate-900/20">
+                    Crear cuenta
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-32 pb-20 px-4 relative overflow-hidden">
+        <div class="max-w-5xl mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-thun-blue text-sm font-semibold mb-8 border border-blue-100">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                </span>
+                Nueva V3: Modo Interactivo en Tiempo Real
+            </div>
+            
+            <h1 class="text-6xl md:text-7xl font-hand text-slate-900 mb-8 leading-tight">
+                Donde la <span class="text-gradient">Razón</span> estudia <br>
+                y el <span class="text-pink-500 hand-underline">Corazón</span> enseña.
+            </h1>
+            
+            <p class="text-xl text-slate-500 max-w-2xl mx-auto mb-12 font-light leading-relaxed">
+                La única plataforma que combina <strong>simulacros de oposición rigurosos</strong> con la emoción de la <strong>formación interactiva en vivo</strong>. Diseñada por médicos, para mentes brillantes.
+            </p>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-20">
+                <button class="bg-thun-blue text-white px-8 py-4 rounded-2xl shadow-xl shadow-blue-500/30 font-semibold text-lg hover:-translate-y-1 transition-all flex items-center justify-center gap-2 group">
+                    Empezar Gratis
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                    </svg>
+                </button>
+                <button class="bg-white text-slate-700 border border-slate-200 px-8 py-4 rounded-2xl shadow-sm hover:shadow-md transition-all font-medium">
+                    Ver Demo en Vídeo
+                </button>
+            </div>
+
+            <div class="relative max-w-5xl mx-auto">
+                <div class="absolute -inset-1 bg-gradient-to-r from-blue-500 to-pink-500 rounded-[2.5rem] blur opacity-20"></div>
+                <div class="relative bg-white rounded-[2rem] shadow-2xl border border-slate-100 overflow-hidden p-2">
+                    <div class="bg-slate-50 rounded-[1.5rem] p-8 md:p-12 border border-slate-100">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="bg-white p-6 rounded-3xl shadow-soft md:col-span-2">
+                                <div class="flex justify-between items-center mb-6">
+                                    <div>
+                                        <h3 class="font-hand text-slate-500 text-lg">Simulacro MIR 2025</h3>
+                                        <p class="text-4xl font-bold text-slate-800 mt-1">142 <span class="text-sm font-normal text-slate-400">Netas</span></p>
+                                    </div>
+                                    <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-bold">+15 pts</span>
+                                </div>
+                                <div class="h-40 w-full flex items-end justify-between gap-2">
+                                    <div class="w-full bg-blue-100 h-[40%] rounded-t-lg"></div>
+                                    <div class="w-full bg-blue-100 h-[60%] rounded-t-lg"></div>
+                                    <div class="w-full bg-blue-100 h-[50%] rounded-t-lg"></div>
+                                    <div class="w-full bg-blue-500 h-[85%] rounded-t-lg relative group">
+                                        <div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition">Tu nota</div>
+                                    </div>
+                                    <div class="w-full bg-blue-100 h-[70%] rounded-t-lg"></div>
+                                </div>
+                            </div>
+
+                            <div class="bg-white p-6 rounded-3xl shadow-soft flex flex-col justify-between">
+                                <div>
+                                    <h3 class="font-bold text-slate-800 text-lg mb-4">Acciones Rápidas</h3>
+                                    <div class="space-y-3">
+                                        <div class="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl cursor-pointer transition">
+                                            <div class="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center">⚡</div>
+                                            <div class="text-sm font-medium">Test Rápido</div>
+                                        </div>
+                                        <div class="flex items-center gap-3 p-3 hover:bg-slate-50 rounded-xl cursor-pointer transition">
+                                            <div class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center">📝</div>
+                                            <div class="text-sm font-medium">Crear Examen</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-6 pt-6 border-t border-slate-100">
+                                    <p class="font-hand text-slate-400 text-center text-sm">"Hoy es un buen día para aprobar"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="py-24 bg-white relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-hand text-slate-800 mb-4">Todo lo que necesitas</h2>
+                <p class="text-slate-500">Desde el estudio solitario hasta el escenario multitudinario.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="group hover:-translate-y-2 transition-all duration-300">
+                    <div class="bg-slate-50 rounded-[2rem] p-8 h-full border border-slate-100 hover:border-blue-200 hover:shadow-soft">
+                        <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-2xl mb-6">🧠</div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-3">Modo Oposición</h3>
+                        <p class="text-slate-500 leading-relaxed mb-6">
+                            Simula la presión real. Penalización por fallos[cite: 35], control de tiempo estricto y lógica condicional. Entrena tu cerebro para el examen.
+                        </p>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li class="flex gap-2 items-center"><span class="text-blue-500">✓</span> Saltos condicionales [cite: 34]</li>
+                            <li class="flex gap-2 items-center"><span class="text-blue-500">✓</span> Fórmulas de corrección</li>
+                            <li class="flex gap-2 items-center"><span class="text-blue-500">✓</span> Reanudación automática [cite: 14]</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="group hover:-translate-y-2 transition-all duration-300 transform md:-mt-8">
+                    <div class="bg-slate-900 rounded-[2rem] p-8 h-full shadow-2xl shadow-slate-900/20 text-white relative overflow-hidden">
+                        <div class="absolute top-0 right-0 p-32 bg-blue-600 rounded-full blur-[80px] opacity-20"></div>
+                        <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center text-2xl mb-6 backdrop-blur">❤️</div>
+                        <h3 class="text-2xl font-bold mb-3 font-hand">Modo En Vivo</h3>
+                        <p class="text-slate-300 leading-relaxed mb-6">
+                            Convierte tus clases en una experiencia. Gamificación, rankings en tiempo real y preguntas lanzadas al instante[cite: 46].
+                        </p>
+                        <ul class="space-y-2 text-sm text-slate-300">
+                            <li class="flex gap-2 items-center"><span class="text-yellow-400">★</span> Rankings y Podiums [cite: 48]</li>
+                            <li class="flex gap-2 items-center"><span class="text-yellow-400">★</span> Integración con Slides [cite: 50]</li>
+                            <li class="flex gap-2 items-center"><span class="text-yellow-400">★</span> Votaciones del público</li>
+                        </ul>
+                        <button class="mt-8 w-full py-3 bg-blue-600 rounded-xl font-semibold hover:bg-blue-500 transition">
+                            Probar Demo Live
+                        </button>
+                    </div>
+                </div>
+
+                <div class="group hover:-translate-y-2 transition-all duration-300">
+                    <div class="bg-slate-50 rounded-[2rem] p-8 h-full border border-slate-100 hover:border-blue-200 hover:shadow-soft">
+                        <div class="w-14 h-14 bg-white rounded-2xl shadow-sm flex items-center justify-center text-2xl mb-6">📊</div>
+                        <h3 class="text-2xl font-bold text-slate-800 mb-3">Gestión Clínica</h3>
+                        <p class="text-slate-500 leading-relaxed mb-6">
+                            Gestiona ediciones múltiples, analiza estadísticas detalladas de cada alumno y exporta los datos para tu control[cite: 26].
+                        </p>
+                        <ul class="space-y-2 text-sm text-slate-600">
+                            <li class="flex gap-2 items-center"><span class="text-blue-500">✓</span> Gestión de participantes [cite: 22]</li>
+                            <li class="flex gap-2 items-center"><span class="text-blue-500">✓</span> Test síncronos y asíncronos [cite: 5]</li>
+                            <li class="flex gap-2 items-center"><span class="text-blue-500">✓</span> Analítica Pro [cite: 40]</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6">
+        <div class="max-w-4xl mx-auto bg-thun-blue rounded-[3rem] p-12 text-center text-white relative overflow-hidden shadow-2xl shadow-blue-500/40">
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+            
+            <h2 class="text-4xl md:text-5xl font-hand mb-6 relative z-10">¿Listo para cambiar la forma de evaluar?</h2>
+            <p class="text-blue-100 text-lg mb-8 max-w-xl mx-auto relative z-10">
+                Únete a la plataforma que fusiona tecnología y docencia. Sin tarjetas de crédito para empezar.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 relative z-10">
+                <button class="bg-white text-blue-600 px-8 py-4 rounded-xl font-bold hover:shadow-lg transition transform hover:scale-105">
+                    Crear mi primer ThunTest
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-white py-12 border-t border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2">
+                 <div class="bg-slate-100 text-slate-400 w-8 h-8 rounded-lg flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                </div>
+                <span class="font-bold text-slate-700">ThunTest</span>
+            </div>
+            <p class="text-slate-400 text-sm font-hand">
+                Hecho con <span class="text-red-400">♥</span> y lógica desde Murcia.
+            </p>
+            <div class="flex gap-6 text-slate-400">
+                <a href="#" class="hover:text-slate-600 transition">Twitter</a>
+                <a href="#" class="hover:text-slate-600 transition">LinkedIn</a>
+                <a href="#" class="hover:text-slate-600 transition">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
